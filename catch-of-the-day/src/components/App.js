@@ -12,21 +12,26 @@ class App extends React.Component {
         fishes: {
 
         },
-        order: {}
+        order: {
+
+        }
     };
 
     addFish = (fish) => {
-        // 1. copy fishes
         const fishes = { ...this.state.fishes };
-        // 2. add our new fishes.
-        console.log("Adding a fish!");
         fishes[`fish${Date.now()}`] = fish;
-        // 3. set the new fishes object to state
         this.setState({ fishes });
     };
 
     loadSampleFishes = () => {
         this.setState({ fishes: sampleFishes});
+    };
+
+    addToOrder = (key) => {
+        const order = { ...this.state.order };
+        order[key] = order[key] + 1 || 1;
+        this.setState({ order });
+
     };
 
     render() {
@@ -36,11 +41,13 @@ class App extends React.Component {
                     <Header tagline="Fresh Seafood Market" />
                     <ul className="fishes">
                         {
-                            Object.keys(this.state.fishes).map(key => <Fish details={this.state.fishes[key]} key={key} />)
+                            Object
+                                .keys(this.state.fishes)
+                                .map(key => <Fish index={key} details={this.state.fishes[key]} key={key} addToOrder={this.addToOrder} />)
                         }
                     </ul>
                 </div>
-                <Order />
+                <Order fishes={this.state.fishes} order={this.state.order} />
                 <Inventory addFish={this.addFish} loadSampleFishes={this.loadSampleFishes} />
             </div> 
         );
