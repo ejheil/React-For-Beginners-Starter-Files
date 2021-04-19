@@ -5,17 +5,29 @@ import Order from "./Order";
 import Inventory from "./Inventory";
 import sampleFishes from "../sample-fishes";
 import Fish from "./Fish";
+import base from '../base';
 
 class App extends React.Component {
 
     state = {
-        fishes: {
-
-        },
-        order: {
-
-        }
+        fishes: {},
+        order: {}
     };
+
+    componentDidMount() {
+        const { params } = this.props.match;
+        // store a reference to the database so we can remove it.
+        this.ref = base.syncState(`${params.storeId}/fishes`, {
+            context: this,
+            state: 'fishes'
+        });
+        console.log("Mounted!");
+    }
+
+    componentWillUnmount() {
+        console.log("unmounting!");
+        base.removeBinding(this.ref);
+    }
 
     addFish = (fish) => {
         const fishes = { ...this.state.fishes };
