@@ -1,18 +1,9 @@
 import React from 'react';
+import PropTypes from "prop-types";
+
 import {getFunName} from '../helpers';
 
-
 class StorePicker extends React.Component {
-
-    // constructor() {
-    //     super();
-    //     // this.goToStore = this.goToStore.bind(this);
-    // }
-
-    handleClick() {
-        alert("Heyyyy!");
-    }
-
     myInput = React.createRef();
 
     goToStore = (event) => {
@@ -39,7 +30,10 @@ class StorePicker extends React.Component {
                 <button type="submit">Visit Store -&gt;</button>
             </form>
         );
+    }
 
+    static propTypes = {
+        history: PropTypes.object
     }
 }
 
